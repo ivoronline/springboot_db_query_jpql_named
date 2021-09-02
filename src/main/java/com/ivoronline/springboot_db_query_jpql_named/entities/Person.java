@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
+//There is no INSERT since JPQL doesn't support INSERT. Records will be inserted through Repository.
 @NamedQuery(
   name  = "Person.selectPersonByNameAge",
   query = "SELECT person FROM Person person WHERE person.name = ?1 AND person.age = ?2"
@@ -29,8 +30,8 @@ public class Person {
   public Integer age;
 
   //CONSTRUCTORS
-  public Person() { }                               //Forced by @Entity
-  public Person(String name, Integer age) {         //To simplify PersonLoader
+  public Person() { }                               //Forced by @Entity if we define Custom Constructor
+  public Person(String name, Integer age) {         //Needed for JPQL
     this.name = name;
     this.age  = age;
   }

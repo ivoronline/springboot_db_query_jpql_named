@@ -1,6 +1,8 @@
 package com.ivoronline.springboot_db_query_jpql_named.services;
 
 import com.ivoronline.springboot_db_query_jpql_named.entities.Person;
+import com.ivoronline.springboot_db_query_jpql_named.repositories.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
@@ -10,7 +12,9 @@ import javax.persistence.Query;
 @Service
 public class DBAccess {
 
-  @PersistenceContext EntityManager entityManager;
+  //PersonRepository is used only for INSERT through Repository since JPQL doesn't support INSERT
+  @Autowired          PersonRepository personRepository;
+  @PersistenceContext EntityManager    entityManager;
 
   //================================================================
   // SELECT PERSON BY NAME AGE
@@ -28,6 +32,15 @@ public class DBAccess {
     //RETURN
     return person;
 
+  }
+
+  //================================================================
+  // INSERT PERSON
+  //================================================================
+  // INSERT is not supported by JPQL so we use Repository
+  @Transactional
+  public void insertPerson() {
+    personRepository.save(new Person("John" , 20));
   }
 
   //================================================================
