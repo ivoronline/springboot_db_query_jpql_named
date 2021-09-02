@@ -2,55 +2,52 @@ package com.ivoronline.springboot_db_query_jpql_named.controllers;
 
 import com.ivoronline.springboot_db_query_jpql_named.entities.Person;
 import com.ivoronline.springboot_db_query_jpql_named.repositories.PersonRepository;
+import com.ivoronline.springboot_db_query_jpql_named.services.DBAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 @RestController
 public class MyController {
 
-  @PersistenceContext EntityManager entityManager;
+  @Autowired DBAccess         dbAccess;
+  @Autowired PersonRepository personRepository;    //Only for INSERT
 
   //================================================================
-  // RETURN PERSON INDEXED
+  // SELECT PERSON BY NAME AGE
   //================================================================
-  @RequestMapping("ReturnPersonIndexed")
-  Person returnPersonIndexed() {
-
-    //REFERENCE QUERY USING ENTITY MANAGER
-    Query  query  = entityManager.createNamedQuery("Person.findByNameAgeIndexed");
-           query.setParameter(1, "John");
-           query.setParameter(2, 20);
-
-    //GET PERSON
-    Person person = (Person) query.getSingleResult();
-
-    //RETURN PERSON
+  @RequestMapping("SelectPersonByNameAge")
+  Person selectPersonByNameAge() {
+    Person person = dbAccess.selectPersonByNameAge();
     return person;
-
   }
 
   //================================================================
-  // RETURN PERSON NAMED
+  // UPDATE PERSON
   //================================================================
-  @RequestMapping("ReturnPersonNamed")
-  Person returnPersonNamed() {
+  @RequestMapping("UpdatePerson")
+  String updatePerson() {
+    Integer updatedRecords = dbAccess.updatePerson();
+    return  updatedRecords + " Records Updated";
+  }
 
-    //REFERENCE QUERY USING ENTITY MANAGER
-    Query  query  = entityManager.createNamedQuery("Person.findByNameAgeNamed");
-           query.setParameter("name", "John");
-           query.setParameter("age" , 20);
+  //================================================================
+  // DELETE PERSON
+  //================================================================
+  @RequestMapping("DeletePerson")
+  String deletePerson() {
+    Integer deletedRecords = dbAccess.deletePerson();
+    return  deletedRecords + " Records Deleted";
+  }
 
-    //GET PERSON
-    Person person = (Person) query.getSingleResult();
-
-    //RETURN PERSON
-    return person;
-
+  //================================================================
+  // INSERT PERSON
+  //================================================================
+  // INSERT is not supported by JPQL so we use Repository
+  @RequestMapping("InsertPerson")
+  String insertPerson() {
+    personRepository.save(new Person("John" , 20));
+    return "Person Inserted into DB";
   }
 
 }

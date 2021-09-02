@@ -7,12 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
 @NamedQuery(
-  name  = "Person.findByNameAgeIndexed",
+  name  = "Person.selectPersonByNameAge",
   query = "SELECT person FROM Person person WHERE person.name = ?1 AND person.age = ?2"
 )
 @NamedQuery(
-  name  = "Person.findByNameAgeNamed",
-  query = "SELECT person FROM Person person WHERE person.name = :name AND person.age = :age"
+  name  = "Person.updatePerson",
+  query = "UPDATE Person person SET person.age = :newAge WHERE person.name = :name"
+
+)@NamedQuery(
+  name  = "Person.deletePerson",
+  query = "DELETE FROM Person person WHERE person.name = :name"
 )
 @Entity
 public class Person {
