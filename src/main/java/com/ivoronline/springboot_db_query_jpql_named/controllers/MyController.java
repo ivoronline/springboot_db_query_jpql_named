@@ -26,8 +26,8 @@ public class MyController {
   //================================================================
   @RequestMapping("InsertPerson")
   String insertPerson() {
-    dbAccess.insertPerson();
-    return "Person Inserted into DB";
+    Integer insertedRecords = dbAccess.insertPerson();
+    return  insertedRecords + " Records Inserted";
   }
 
   //================================================================
