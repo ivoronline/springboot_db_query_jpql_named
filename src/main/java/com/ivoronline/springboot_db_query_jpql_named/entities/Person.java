@@ -28,11 +28,4 @@ public class Person {
   public String  name;
   public Integer age;
 
-  //CONSTRUCTORS
-  public Person() { }                               //Forced by @Entity if we define Custom Constructor
-  public Person(String name, Integer age) {         //Needed for JPQL
-    this.name = name;
-    this.age  = age;
-  }
-
 }
