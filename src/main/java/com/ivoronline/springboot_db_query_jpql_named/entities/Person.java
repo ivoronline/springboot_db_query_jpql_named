@@ -4,16 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQuery;
 
 @NamedQuery(
-  name  = "Person.selectPersonByNameAge",
+  name  = "Person.selectPerson",
   query = "SELECT person FROM Person person WHERE person.name = ?1 AND person.age = ?2"
-)
-@NamedNativeQuery( //For INSERT we are using Native Query since JPQL doesn't support INSERT
-  name  = "Person.insertPerson",
-  query = "INSERT INTO PERSON (name, age) VALUES (:name, :age)"
 )
 @NamedQuery(
   name  = "Person.updatePerson",

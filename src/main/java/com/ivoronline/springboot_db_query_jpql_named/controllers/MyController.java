@@ -9,25 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyController {
 
-  //@Transactional can't be applied to Endpoint Methods so we created DBAccess Methods
+  //PROPERTIES
   @Autowired DBAccess dbAccess;
 
   //================================================================
-  // SELECT PERSON BY NAME AGE
+  // SELECT PERSON
   //================================================================
-  @RequestMapping("SelectPersonByNameAge")
+  @RequestMapping("SelectPerson")
   Person selectPersonByNameAge() {
-    Person person = dbAccess.selectPersonByNameAge();
+    Person person = dbAccess.selectPerson();
     return person;
-  }
-
-  //================================================================
-  // INSERT PERSON
-  //================================================================
-  @RequestMapping("InsertPerson")
-  String insertPerson() {
-    Integer insertedRecords = dbAccess.insertPerson();
-    return  insertedRecords + " Records Inserted";
   }
 
   //================================================================

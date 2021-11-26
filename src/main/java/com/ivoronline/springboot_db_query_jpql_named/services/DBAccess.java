@@ -10,15 +10,16 @@ import javax.persistence.Query;
 @Service
 public class DBAccess {
 
+  //PROPERTIES
   @PersistenceContext EntityManager entityManager;
 
   //================================================================
-  // SELECT PERSON BY NAME AGE
+  // SELECT PERSON
   //================================================================
-  public Person selectPersonByNameAge() {
+  public Person selectPerson() {
 
     //REFERENCE QUERY USING ENTITY MANAGER
-    Query  query  = entityManager.createNamedQuery("Person.selectPersonByNameAge");
+    Query  query  = entityManager.createNamedQuery("Person.selectPerson");
            query.setParameter(1, "John");
            query.setParameter(2 , 20);
 
@@ -27,26 +28,6 @@ public class DBAccess {
 
     //RETURN
     return person;
-
-  }
-
-  //================================================================
-  // INSERT PERSON
-  //================================================================
-  // For INSERT we are using Native Query since JPQL doesn't support INSERT
-  @Transactional
-  public Integer insertPerson() {
-
-    //REFERENCE QUERY USING ENTITY MANAGER
-    Query query = entityManager.createNamedQuery("Person.insertPerson");
-          query.setParameter("name", "John");
-          query.setParameter("age" , 20);
-
-    //GET NUMBER OF INSERTED RECORDS
-    Integer insertedRecords = query.executeUpdate();
-
-    //RETURN
-    return insertedRecords;
 
   }
 
@@ -61,7 +42,7 @@ public class DBAccess {
            query.setParameter("name"  , "John");
            query.setParameter("newAge", 200);
 
-    //GET PERSON
+    //UPDATE PERSON
     Integer updatedRecords = query.executeUpdate();
 
     //RETURN
@@ -79,7 +60,7 @@ public class DBAccess {
     Query  query  = entityManager.createNamedQuery("Person.deletePerson");
            query.setParameter("name", "John");
 
-    //GET PERSON
+    //DELETE PERSON
     Integer deletedRecords = query.executeUpdate();
 
     //RETURN
